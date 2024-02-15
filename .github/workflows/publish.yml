@@ -55,6 +55,8 @@ jobs:
       - run: pnpm install
       - run: git status
       - name: Publish to npm
-        run: npm run publish --tag ${{ needs.get_dist_tag.outputs.DIST_TAG }}
+        run: |
+          echo dist_tag in publish: ${needs.get_dist_tag.outputs.DIST_TAG}
+          npm run publish --tag ${{ needs.get_dist_tag.outputs.DIST_TAG }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
