@@ -2,7 +2,7 @@ name: OpenAPI Test
 
 on:
   push:
-    branches: [master]
+    branches: [contract-codec-test]
   pull_request:
 
 jobs:
