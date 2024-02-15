@@ -6,6 +6,7 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+-test.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+-leman.[0-9]+'
   workflow_dispatch:
 
@@ -27,9 +28,13 @@ jobs:
         id: get_tag
         run: |
           tag=$(echo ${GITHUB_REF/refs\/tags\//} | cut -c 2-)
+          echo tag: $tag
           dist_tag=$([[ $tag =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] && echo latest || echo "")
+          echo dist_tag 1: $dist_tag
           dist_tag=$([[ $tag =~ ^[0-9]+\.[0-9]+\.[0-9]+-rc\.[0-9]+$ ]] && echo rc || echo $dist_tag)
+          echo dist_tag 2: $dist_tag
           [ -z "$dist_tag" ] && echo "Distribution tag is not set to latest nor to rc" && exit 1
+          echo dist_tag 3: $dist_tag
           echo ::set-output name=DIST_TAG::$dist_tag
         shell: bash
   publish:
